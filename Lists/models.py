@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Task(models.Model):
@@ -7,6 +8,7 @@ class Task(models.Model):
         ('m', 'Medium'),
         ('h', 'High'),
     ]
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     description = models.TextField()
     completed = models.BooleanField(default=False)
