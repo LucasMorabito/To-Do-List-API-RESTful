@@ -20,5 +20,5 @@ class RegisterSerializer(serializers.ModelSerializer):
 class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
-        fields = '__all__'
+        fields = ['id','user','title','description','completed','priority','due_date','created_at']
         read_only_fields = ('id', 'created_at', 'user')

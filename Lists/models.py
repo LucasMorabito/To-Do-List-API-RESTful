@@ -4,9 +4,9 @@ from django.contrib.auth.models import User
 # Create your models here.
 class Task(models.Model):
     PRIORITY_CHOICES = [
-        ('l', 'Low'),
-        ('m', 'Medium'),
-        ('h', 'High'),
+        ('low', 'Low'),
+        ('medium', 'Medium'),
+        ('high', 'High'),
     ]
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
