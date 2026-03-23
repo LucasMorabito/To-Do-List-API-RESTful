@@ -2,7 +2,7 @@
 
 A RESTful API for task management built with Django REST Framework. Features JWT authentication, task filtering, search, pagination, and interactive API documentation via Swagger.
 
-**Live API:** https://to-do-list-api-restful.onrender.com  
+**Live API:** https://to-do-list-api-restful.onrender.com/api/ 
 **Interactive Docs:** https://to-do-list-api-restful.onrender.com/api/docs/
 
 ---
