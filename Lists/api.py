@@ -18,6 +18,25 @@ def register(request):
         )
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+@api_view(['GET'])
+def stats(request):
+    total_tasks = Task.objects.filter(user=request.user).count()
+    completed_tasks = Task.objects.filter(user=request.user,completed=True).count()
+    uncompleted_tasks = Task.objects.filter(user=request.user,completed=False).count()
+    low_priority = Task.objects.filter(user=request.user,priority='low').count()
+    medium_priority = Task.objects.filter(user=request.user,priority='medium').count()
+    high_priority = Task.objects.filter(user=request.user,priority='high').count()
+    return Response(
+            {   
+                "total": total_tasks,
+                "completed": completed_tasks,
+                "pending": uncompleted_tasks,
+                "low": low_priority,
+                "medium": medium_priority,
+                "high": high_priority
+            }
+        )
+    
 class TaskViewSet(viewsets.ModelViewSet):
     serializer_class = TaskSerializer
     permission_classes = [permissions.IsAuthenticated]
