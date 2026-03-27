@@ -1,8 +1,8 @@
 # To-Do List API
 
-A RESTful API for task management built with Django REST Framework. Features JWT authentication, task filtering, search, pagination, and interactive API documentation via Swagger.
+A RESTful API for task management built with Django REST Framework. Features JWT authentication, task filtering, search, pagination, statistics, and interactive API documentation via Swagger.
 
-**Live API:** https://to-do-list-api-restful.onrender.com/api/  
+**Live API:** https://to-do-list-api-restful.onrender.com  
 **Interactive Docs:** https://to-do-list-api-restful.onrender.com/api/docs/
 
 ---
@@ -26,6 +26,7 @@ A RESTful API for task management built with Django REST Framework. Features JWT
 - Order tasks by creation date or due date
 - Pagination (10 tasks per page)
 - Per-user data isolation — users only see their own tasks
+- Task statistics endpoint
 - Interactive API documentation (Swagger UI)
 - Automated test suite
 
@@ -96,6 +97,7 @@ python -c "import secrets; print(secrets.token_urlsafe(50))"
 | PUT | `/api/tasks/{id}/` | Update a task (full update) | Yes |
 | PATCH | `/api/tasks/{id}/` | Update a task (partial update) | Yes |
 | DELETE | `/api/tasks/{id}/` | Delete a task | Yes |
+| GET | `/api/tasks/stats/` | Get task statistics for the authenticated user | Yes |
 
 ### Documentation
 
@@ -111,13 +113,13 @@ python -c "import secrets; print(secrets.token_urlsafe(50))"
 Tasks support filtering, searching, and ordering via query parameters:
 
 ```
-GET /api/tasks/?completed=false              # Only pending tasks
-GET /api/tasks/?priority=high                # Only high priority tasks
-GET /api/tasks/?completed=false&priority=high  # Pending AND high priority
-GET /api/tasks/?search=groceries             # Search in title and description
-GET /api/tasks/?ordering=due_date            # Order by due date (ascending)
-GET /api/tasks/?ordering=-created_at         # Order by creation date (descending)
-GET /api/tasks/?page=2                       # Page 2 (10 tasks per page)
+GET /api/tasks/?completed=false               # Only pending tasks
+GET /api/tasks/?priority=high                 # Only high priority tasks
+GET /api/tasks/?completed=false&priority=high # Pending AND high priority
+GET /api/tasks/?search=groceries              # Search in title and description
+GET /api/tasks/?ordering=due_date             # Order by due date (ascending)
+GET /api/tasks/?ordering=-created_at          # Order by creation date (descending)
+GET /api/tasks/?page=2                        # Page 2 (10 tasks per page)
 ```
 
 **Priority values:** `low`, `medium`, `high`
@@ -189,6 +191,24 @@ Content-Type: application/json
     "due_date": "2025-12-31T18:00:00Z",
     "created_at": "2025-03-23T12:00:00Z",
     "user": 1
+}
+```
+
+### Task Statistics
+
+```
+GET /api/tasks/stats/
+Authorization: Bearer <access_token>
+```
+
+```json
+{
+    "total": 10,
+    "completed": 4,
+    "pending": 6,
+    "low": 2,
+    "medium": 5,
+    "high": 3
 }
 ```
 
