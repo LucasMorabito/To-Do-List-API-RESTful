@@ -20,20 +20,21 @@ def register(request):
 
 @api_view(['GET'])
 def stats(request):
-    total_tasks = Task.objects.filter(user=request.user).count()
-    completed_tasks = Task.objects.filter(user=request.user,completed=True).count()
-    uncompleted_tasks = Task.objects.filter(user=request.user,completed=False).count()
-    low_priority = Task.objects.filter(user=request.user,priority='low').count()
-    medium_priority = Task.objects.filter(user=request.user,priority='medium').count()
-    high_priority = Task.objects.filter(user=request.user,priority='high').count()
+    user_tasks = Task.objects.filter(user=request.user)
+    total = user_tasks.count()
+    completed = user_tasks.filter(completed=True).count()
+    uncompleted = user_tasks.filter(completed=False).count()
+    low = user_tasks.filter(priority='low')
+    medium = user_tasks.filter(priority='medium')
+    high = user_tasks.filter(priority='high')
     return Response(
             {   
-                "total": total_tasks,
-                "completed": completed_tasks,
-                "pending": uncompleted_tasks,
-                "low": low_priority,
-                "medium": medium_priority,
-                "high": high_priority
+                "total": total,
+                "completed": completed,
+                "pending": uncompleted,
+                "low": low,
+                "medium": medium,
+                "high": high
             }
         )
     
